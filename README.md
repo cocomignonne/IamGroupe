@@ -38,3 +38,14 @@
 > ## 동작과정🎐 <br>
 <img src="https://user-images.githubusercontent.com/91956877/160278685-b93a0c6a-b99a-4952-991e-eb716c8086d0.PNG" width="65%" height="60%" title="스프링 동작과정"></img>_[참조1](https://galid1.tistory.com/503)_<br>
 
+1. 클라이언트의 요청이 Controller의 Handler에 도달하기 전에 CookieInterceptor나 LoginInterceptor를 거쳐 로그인의 여부를 체크한다.
+2. Interceptor들을 통과하면 DispatcherServlet은 HandlerMapping에게 요청을 전달하고 알맞는 Controller를 찾는다.
+3. Controller는 요청을 처리하고 HandlerAdapter에게 처리결과를 보낸다.
+    * 처리과정
+    1. Controller에서 RequestMapping()을 통해 알맞은 액션이 실행되고 비즈니스 로직을 처리하고 Service에게 넘겨준다.
+    2. Service에선 Controller로부터 받은 데이터를 보관, 수정, 삭제를 위해 DTO에게 데이터를 넘겨준다.
+    3. .xml파일에서 Mybatis와 DB 연결하고 DTO와 연결해준다.
+    4. DTO로부터 SQL문을 읽고 데이터를 처리하고 그 결과를 다시 Service를 거쳐 Controller로 보낸다.
+    5. Controller는 결과에 맞게 데이터를 렌더링한다.
+4. HandlerAdapter받은 결과를 ModelAndView 형태의 Model을 파라미터를 DispatcherServlet에게 전달한다.
+5. DispatcherServlet은  viewresolver를 통해 알맞는 view를 찾아 렌더링된 페이지를 response로 사용자에게 리턴한다.
